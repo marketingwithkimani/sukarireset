@@ -1,0 +1,6 @@
+{
+  "name": "Sukari Reset Companion App",
+  "description": "The official companion application for the Sukari Reset ecosystem. Help Kenyans living with Type 2 diabetes and prediabetes manage their health through local food pairing, community support, and habit tracking.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

@@ -1,6 +1,0 @@
-{
-  "name": "Fitmeal WordPress Theme Replica",
-  "description": "An exact, high-fidelity interactive replica of the Fitmeal Healthy Food & Nutrition WordPress Theme, featuring beautiful animations, meal plan highlights, interactive nutrient calculator, custom salad builder, and seamless checkout flow.",
-  "requestFramePermissions": [],
-  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
-}

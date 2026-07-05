@@ -1,0 +1,133 @@
+{
+  "story_sections": {
+    "hook": {
+      "badge": "THE CYCLE",
+      "title": "The 4:00 PM Silent Bargain",
+      "paragraphs": [
+        "You wake up at 6:00 AM in Nairobi, looking out at the morning mist, with a quiet vow. Today will be different. You skip the blue-band on your slice of bread. You drink your black tea (chai) without sugar, ignoring the familiar warmth of milk. You feel strong, in control.",
+        "Then comes the midday rush. The back-to-back Zoom meetings. The heat on Mombasa Road. The endless traffic jam on your way back from Upper Hill. By 4:00 PM, your energy crashes. There is a faint headache. Your willpower, which felt so solid in the morning, starts to feel paper-thin.",
+        "A colleague passes by with fresh mandazi, or you spot a vendor near the stage. You tell yourself: 'Just a bite to keep me going. I'll make up for it at dinner.' But that single bite turns into two. By the time you reach home, a heavy blanket of guilt settles over you. You look at your blood sugar meter, and instead of a tool, it feels like a judge."
+      ]
+    },
+    "family": {
+      "badge": "THE SUNDAY LUNCH",
+      "title": "Calculating Every Bite of Joy",
+      "paragraphs": [
+        "Think of Sunday afternoon family gatherings. The aroma of nyama choma over charcoal, warm chapatis stacked high under a clean kitenge cloth, and golden bowls of mukimo. This is where your family gathers to laugh, tell stories, and connect.",
+        "But for you, it is a battlefield. While others load their plates freely, you sit there doing mental math. If I eat half a chapati, what does that mean for my reading tonight? You feel everyone's eyes on your plate. 'Kula tu kidogo, haitakudhuru,' an auntie says, well-meaning but unaware of the storm inside you. Or worse, the unsolicited advice about boiled herbs and complete restriction.",
+        "You end up feeling like a stranger at your own family table. Food—which used to represent home, celebration, and love—has slowly become something you fear. A source of silent anxiety."
+      ]
+    },
+    "confusion": {
+      "badge": "THE NOISE",
+      "title": "Tired of the Dr. Google Lectures?",
+      "paragraphs": [
+        "If you feel overwhelmed, it is not your fault. One week you are told to eat only brown bread and oats. The next week, an influencer on Instagram claims oats are spiking your insulin. A WhatsApp group forward from a cousin recommends boiled okra water, while a medical website written for an audience across the ocean tells you to buy ingredients you cannot even find in a Nairobi market.",
+        "You have tried. You have bought the expensive health foods that taste like cardboard. You have downloaded foreign fitness apps with databases full of foods you don't eat. Yet, the numbers on your meter still fluctuate, and you feel more confused than ever.",
+        "Willpower is a finite resource. When you are fighting a busy life, traffic, work, and family responsibilities, relying on sheer willpower to fight your own biology is a losing battle. You don't need another lecture. You need a path that fits into your life as a Kenyan."
+      ]
+    },
+    "philosophy": {
+      "badge": "THE RESET",
+      "title": "A Gentler Way Forward",
+      "paragraphs": [
+        "What if we stopped treating food as the enemy? What if we acknowledged that you cannot shame yourself into long-term health?",
+        "Sukari Reset was built by Kenyans, for Kenyans, who understand that food is culture, connection, and joy. We don't believe in complete restriction or expensive, imported diets. We believe in understanding how our local, everyday meals—our ugali, our ndengu, our managu, our beef stew—can work *for* your blood sugar instead of against it.",
+        "But more than that, we believe that consistency is built through daily support, not solitary struggles. When you reset with us, you join a sisterhood and brotherhood of people walking the exact same path. No judgement. Only progress, one meal, one walk, and one day at a time."
+      ]
+    }
+  },
+  "testimonials": [
+    {
+      "id": "1",
+      "name": "Wanjiku N.",
+      "age": 46,
+      "location": "Kileleshwa, Nairobi",
+      "timeframe": "4 months with Sukari Reset",
+      "story": "I used to feel so much guilt at family gatherings. I'd sit in the corner staring at the chapatis. Through the community, I learned how to pair my foods. I don't hide from my family anymore, and my HbA1c went from 8.4% to 6.2%. The daily encouragement on WhatsApp was my lifeline."
+    },
+    {
+      "id": "2",
+      "name": "Otieno O.",
+      "age": 52,
+      "location": "Kisumu / Milimani",
+      "timeframe": "6 months with Sukari Reset",
+      "story": "As a busy contractor, I'm always on the road. Standard apps asked me to log things like 'Quinoa bowl' or 'Kale salad'. I eat ugali and fish! Sukari Reset spoke my language. The local food guide and the simple habit of a 10-minute walk after lunch changed everything for my morning blood sugar."
+    },
+    {
+      "id": "3",
+      "name": "Amira M.",
+      "age": 39,
+      "location": "Mombasa",
+      "timeframe": "2 months with Sukari Reset",
+      "story": "I was prediabetic and terrified because my mother struggled with diabetes complications. I felt so lonely. Here, I found a warm group of ladies. We share pictures of our meals every day. It's not a diet, it's like a soft reset of your habits."
+    }
+  ],
+  "pricing_tiers": [
+    {
+      "id": "free",
+      "name": "Free Companion",
+      "priceKES": 0,
+      "priceUSD": 0,
+      "period": "forever",
+      "description": "Start building the foundation of your food relationship with zero cost.",
+      "features": [
+        "Access to standard local food companion guide",
+        "Daily blood sugar logger & metric visualizer",
+        "Basic hydration and step tracking",
+        "Weekly community digest newsletter",
+        "Standard Android app download"
+      ]
+    },
+    {
+      "id": "premium",
+      "name": "Premium Reset Club",
+      "priceKES": 1450,
+      "priceUSD": 12,
+      "period": "month",
+      "description": "Our most popular path. Direct daily support, custom meal templates, and active peer groups.",
+      "features": [
+        "Everything in Free Companion",
+        "Daily interactive habit challenges",
+        "Access to active moderated WhatsApp support groups",
+        "Full local recipe database (Ugali, Ndengu, Managu, local stews)",
+        "Weekly live Q&A sessions with Kenyan nutritionists",
+        "No advertisements, clean premium design experience"
+      ],
+      "isPopular": true
+    },
+    {
+      "id": "annual",
+      "name": "Annual Dedicated Circle",
+      "priceKES": 12500,
+      "priceUSD": 99,
+      "period": "year",
+      "description": "For those fully committed to long-term reversal, healthy aging, and sustainable change.",
+      "features": [
+        "Everything in Premium Reset Club",
+        "Equivalent to KES 1,041 per month (Save over 25%)",
+        "One-on-one welcome call with a Sukari health coach",
+        "Exclusive printable Sukari Reset kitchen guide book",
+        "Priority feature requests & early beta app updates"
+      ]
+    }
+  ],
+  "faqs": [
+    {
+      "question": "Do I have to give up ugali or chapati completely?",
+      "answer": "Absolutely not. In Kenya, food is love. Completely eliminating our cultural staples is a recipe for short-term compliance and long-term frustration. Instead, we teach you 'Smart Pairing'—how to combine starch with proteins, fiber, and specific healthy fats to minimize sugar spikes, and the science of simple timing (like a 10-minute walk after eating)."
+    },
+    {
+      "question": "How does the mobile app help me daily?",
+      "answer": "Our app is like a quiet, encouraging friend in your pocket. It sends you a gentle nudge in the morning with a story or tip, helps you log your meals with local photos, lets you log your sugar levels simply, and connects you directly to a circle of 10-15 other Kenyans on the same path."
+    },
+    {
+      "question": "How does payment work? Can I pay with M-Pesa?",
+      "answer": "Yes, we fully support M-Pesa (via standard secure STK push/paybill prompts) as well as all major credit/debit cards. Transactions are processed securely, and you will immediately receive your welcome details and download credentials."
+    },
+    {
+      "question": "Can I use Sukari Reset alongside my doctor's treatment?",
+      "answer": "Yes! Sukari Reset is a wellness companion focused purely on lifestyle and habit building (nutrition, movement, stress, hydration). We never prescribe, alter, or recommend changes to medication. In fact, many members find their doctors are thrilled to see their clean logs and improved HbA1c."
+    }
+  ]
+}

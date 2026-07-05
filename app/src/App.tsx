@@ -237,7 +237,7 @@ export default function App() {
               <div className="flex gap-3 mb-5 gsap-reveal">
                 {[
                   { icon: <Activity size={14} className="text-[#2D6A4F] mb-1" />, val: '6,240', label: 'Steps today' },
-                  { icon: <Flame size={14} className="text-[#E67E22] mb-1" />, val: 'A+', label: 'Nutrition score' },
+                  { icon: <Flame size={14} className="text-[#cfa85c] mb-1" />, val: 'A+', label: 'Nutrition score' },
                   { icon: <Droplets size={14} className="text-blue-400 mb-1" />, val: '1.6L', label: 'Water intake' },
                 ].map((s, i) => (
                   <div key={i} className="stat-chip flex-1">
@@ -288,17 +288,17 @@ export default function App() {
                     <span className="text-[10px] text-[#8C9C94] font-semibold">Elapsed</span>
                   </div>
                   <div className="flex-1">
-                    <div className="progress-track"><div className="progress-fill" style={{ width: '88%', background: '#E67E22' }} /></div>
+                    <div className="progress-track"><div className="progress-fill" style={{ width: '88%', background: '#cfa85c' }} /></div>
                     <p className="text-[10px] text-[#8C9C94] font-medium mt-1.5">16-hour goal · 1h 50m remaining</p>
                   </div>
                 </div>
               </div>
 
               {/* Craving CTA */}
-              <div className="premium-card gsap-reveal mb-4" style={{ background: '#FEF9F0', border: '1px solid rgba(230,126,34,0.15)' }}>
-                <h3 className="font-bold text-[#E67E22] mb-1">Feeling a craving?</h3>
+              <div className="premium-card gsap-reveal mb-4" style={{ background: '#FEF9F0', border: '1px solid rgba(207, 168, 92, 0.15)' }}>
+                <h3 className="font-bold text-[#cfa85c] mb-1">Feeling a craving?</h3>
                 <p className="text-xs text-[#8C9C94] mb-3">Tell your Companion — get an instant reset tip.</p>
-                <button onClick={() => goTo('companion')} className="w-full py-3 rounded-2xl bg-[#E67E22] text-white text-sm font-bold">
+                <button onClick={() => goTo('companion')} className="w-full py-3 rounded-2xl bg-[#cfa85c] text-white text-sm font-bold">
                   Open Companion →
                 </button>
               </div>
@@ -444,7 +444,7 @@ export default function App() {
                     <div className="flex gap-3 items-center bg-white rounded-2xl p-3 shadow-sm mb-4 gsap-reveal" onClick={() => { setActiveCat('supper'); setKitchenView('category'); }}>
                       <img src={IMAGES.supper} alt="Recipe" className="w-16 h-16 rounded-xl object-cover flex-shrink-0" />
                       <div className="flex-1 min-w-0">
-                        <span className="text-[10px] font-bold text-[#E67E22] uppercase tracking-widest">Supper Pick</span>
+                        <span className="text-[10px] font-bold text-[#cfa85c] uppercase tracking-widest">Supper Pick</span>
                         <p className="font-bold text-[#1B4332] text-sm mt-0.5">Mchicha Stew & Brown Rice</p>
                         <p className="text-[10px] text-[#8C9C94] mt-0.5">30 min · Anti-inflammatory · A+</p>
                       </div>
@@ -465,7 +465,7 @@ export default function App() {
                         <img src={r.image} className="w-28 h-full object-cover flex-shrink-0" style={{ minHeight: '100px' }} alt={r.name} />
                         <div className="p-4 flex flex-col justify-between flex-1">
                           <div>
-                            <span className="text-[10px] font-black text-[#E67E22] uppercase tracking-widest">{r.score}</span>
+                            <span className="text-[10px] font-black text-[#cfa85c] uppercase tracking-widest">{r.score}</span>
                             <p className="font-bold text-[#1B4332] text-sm mt-0.5 leading-tight">{r.name}</p>
                             <p className="text-[10px] text-[#8C9C94] mt-1 leading-relaxed">{r.desc}</p>
                           </div>
@@ -526,7 +526,7 @@ export default function App() {
                         <p className="text-white text-2xl font-black">{sec.title}</p>
                       </div>
                     </div>
-                    <p className="text-[10px] font-bold uppercase tracking-widest text-[#E67E22] mb-2 gsap-reveal">{sec.tagline}</p>
+                    <p className="text-[10px] font-bold uppercase tracking-widest text-[#cfa85c] mb-2 gsap-reveal">{sec.tagline}</p>
                     <p className="text-[#374151] text-sm leading-relaxed mb-6 gsap-reveal">{sec.desc}</p>
                     <p className="text-xs font-black uppercase tracking-widest text-[#1B4332] mb-3 gsap-reveal">Key Practices</p>
                     <div className="space-y-3 gsap-reveal">
@@ -569,7 +569,7 @@ export default function App() {
                   ))}
                 </div>
                 <div className="bg-[#FEF9F0] rounded-3xl p-4 border border-[#E67E22]/10">
-                  <p className="text-[10px] font-bold uppercase tracking-widest text-[#E67E22] mb-1">Yesterday's Note</p>
+                  <p className="text-[10px] font-bold uppercase tracking-widest text-[#cfa85c] mb-1">Yesterday's Note</p>
                   <p className="text-sm text-[#374151]">You mentioned feeling sluggish at 3pm. Try adding a small handful of groundnuts to your lunch — healthy fat keeps energy stable. 💪🏿</p>
                 </div>
               </div>
