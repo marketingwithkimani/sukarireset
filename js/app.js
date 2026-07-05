@@ -1,13 +1,8 @@
 // Sukari Reset - App Logic
 let appData = {};
 
-// Helper to get base path
-const getBasePath = () => {
-    const path = window.location.pathname;
-    return path.endsWith('/') ? path : path.substring(0, path.lastIndexOf('/') + 1);
-};
-
-const BASE_PATH = getBasePath();
+// Use relative paths to avoid issues with subdirectories
+const BASE_PATH = '';
 
 // Initialize App
 document.addEventListener('DOMContentLoaded', async () => {
