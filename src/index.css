@@ -1,0 +1,426 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@700;800&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Outfit", system-ui, sans-serif;
+  --font-display: "Playfair Display", serif;
+  --color-primary: #2D6A4F;
+  --color-accent: #E67E22;
+  --color-app-bg: #FAF9F6;
+  --color-text-deep: #1B4332;
+  --color-card: #FFFFFF;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background: #1B4332;
+}
+
+body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  font-family: "Outfit", system-ui, sans-serif;
+  color: var(--color-text-deep);
+  -webkit-font-smoothing: antialiased;
+  background: #1B4332;
+}
+
+#root {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+/* ── App Shell: phone-frame, centred ────────────────────────────────────── */
+.app-shell {
+  width: 390px;
+  height: 100%;
+  max-height: 844px;
+  background: var(--color-app-bg);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  box-shadow: 0 0 80px rgba(0,0,0,0.5);
+  flex-shrink: 0;
+}
+
+/* On actual phones — go truly full-screen */
+@media (max-width: 430px) {
+  #root {
+    align-items: stretch;
+    justify-content: stretch;
+  }
+  .app-shell {
+    width: 100%;
+    height: 100dvh;
+    max-height: none;
+    box-shadow: none;
+  }
+  html, body {
+    background: var(--color-app-bg);
+  }
+}
+
+/* ── Status Bar ─────────────────────────────────────────────────────────── */
+.status-bar {
+  height: 44px;
+  padding: 0 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-shrink: 0;
+  background: var(--color-app-bg);
+}
+
+.status-time {
+  font-size: 14px;
+  font-weight: 800;
+  color: #1B4332;
+}
+
+.status-battery {
+  width: 24px;
+  height: 12px;
+  border: 1.5px solid #1B4332;
+  border-radius: 3px;
+  position: relative;
+}
+
+.status-battery::after {
+  content: '';
+  position: absolute;
+  right: -5px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 3px;
+  height: 6px;
+  background: #1B4332;
+  border-radius: 1px;
+}
+
+/* ── Screen Container & Scrollable Screens ─────────────────────────────── */
+.screen-container {
+  flex: 1;
+  position: relative;
+  overflow: hidden;
+  min-height: 0;
+}
+
+/* Every screen scrolls within this — with room for the bottom nav */
+.screen-scroll {
+  position: absolute;
+  inset: 0;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  padding: 0 0 140px 0;
+}
+
+.screen-scroll::-webkit-scrollbar { display: none; }
+
+/* ── Loading Screen (absolute = bounded by app-shell phone frame) ────────── */
+.loading-screen {
+  position: absolute;
+  inset: 0;
+  z-index: 9999;
+  background: #0A1710;
+  overflow: hidden;
+}
+
+.loading-images-full {
+  position: absolute;
+  inset: 0;
+}
+
+.loading-img-full {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+}
+
+/* Top gradient to darken sky */
+.loading-gradient-top {
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 30%;
+  background: linear-gradient(to bottom, rgba(10,23,16,0.6) 0%, transparent 100%);
+  z-index: 2;
+}
+
+/* Bottom gradient for text legibility */
+.loading-gradient-overlay {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 60%;
+  background: linear-gradient(to top,
+    rgba(10,23,16,0.97) 0%,
+    rgba(10,23,16,0.8) 40%,
+    rgba(10,23,16,0) 100%
+  );
+  z-index: 2;
+}
+
+/* Brand badge top-left */
+.loading-brand {
+  position: absolute;
+  top: 52px;
+  left: 24px;
+  z-index: 10;
+}
+
+.loading-brand-text {
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: 0.22em;
+  color: rgba(255,255,255,0.7);
+  text-transform: uppercase;
+}
+
+/* Text block pinned at bottom */
+.loading-text-block {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  padding: 32px 28px 56px;
+  z-index: 10;
+}
+
+.loading-eyebrow {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: #E67E22;
+  margin: 0 0 10px;
+}
+
+.loading-message {
+  font-family: "Playfair Display", serif;
+  font-size: 22px;
+  line-height: 1.5;
+  color: #fff;
+  margin: 0 0 16px;
+  text-shadow: 0 2px 16px rgba(0,0,0,0.5);
+}
+
+.loading-submessage {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.35);
+  margin: 0;
+}
+
+/* ── Bottom Nav ─────────────────────────────────────────────────────────── */
+.bottom-nav-container {
+  position: absolute;
+  bottom: 20px;
+  left: 12px;
+  right: 12px;
+  z-index: 1000;
+  flex-shrink: 0;
+}
+
+.bottom-nav {
+  background: rgba(255, 255, 255, 0.97);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(45,106,79,0.07);
+  border-radius: 32px;
+  height: 76px;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  padding: 0 6px;
+  box-shadow: 0 8px 40px rgba(27,67,50,0.14);
+}
+
+.nav-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  cursor: pointer;
+  flex: 1;
+  position: relative;
+  border: none;
+  background: none;
+  padding: 8px 0;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.nav-item-active-bg {
+  position: absolute;
+  width: 48px;
+  height: 48px;
+  background: rgba(45,106,79,0.09);
+  border-radius: 18px;
+  z-index: -1;
+}
+
+.nav-label {
+  font-size: 9px;
+  font-weight: 700;
+  color: #8C9C94;
+  letter-spacing: 0.02em;
+}
+
+.nav-item.active .nav-label {
+  color: var(--color-primary);
+}
+
+/* ── Cards ──────────────────────────────────────────────────────────────── */
+.premium-card {
+  background: white;
+  border-radius: 24px;
+  padding: 20px;
+  box-shadow: 0 4px 24px rgba(27,67,50,0.06);
+  border: 1px solid rgba(45,106,79,0.04);
+  position: relative;
+  overflow: hidden;
+}
+
+.stat-chip {
+  background: white;
+  border-radius: 20px;
+  padding: 14px 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-shadow: 0 4px 16px rgba(27,67,50,0.06);
+  border: 1px solid rgba(45,106,79,0.04);
+}
+
+/* ── Progress ───────────────────────────────────────────────────────────── */
+.progress-track {
+  width: 100%;
+  height: 6px;
+  background: #F0F0EC;
+  border-radius: 99px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background: #2D6A4F;
+  border-radius: 99px;
+  transition: width 0.6s ease;
+}
+
+.fasting-badge {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: #F0FAF4;
+  border-radius: 16px;
+  padding: 10px 14px;
+  gap: 2px;
+}
+
+/* ── Step Pulse ─────────────────────────────────────────────────────────── */
+.step-pulse {
+  width: 7px;
+  height: 7px;
+  background: #2D6A4F;
+  border-radius: 50%;
+  position: relative;
+  flex-shrink: 0;
+}
+
+.step-pulse::after {
+  content: "";
+  position: absolute;
+  inset: -4px;
+  border: 2px solid #2D6A4F;
+  border-radius: 50%;
+  animation: ripple 2s infinite;
+}
+
+@keyframes ripple {
+  0%   { transform: scale(1); opacity: 0.8; }
+  100% { transform: scale(2.5); opacity: 0; }
+}
+
+/* ── Kitchen Category Cards ─────────────────────────────────────────────── */
+.kitchen-cat-card {
+  position: relative;
+  height: 140px;
+  border-radius: 24px;
+  overflow: hidden;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.kitchen-cat-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.kitchen-cat-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(27,67,50,0.85) 0%, rgba(27,67,50,0.1) 100%);
+}
+
+.kitchen-cat-content {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 12px;
+}
+
+/* ── Chat Bubbles ───────────────────────────────────────────────────────── */
+.chat-bubble {
+  max-width: 85%;
+  padding: 14px 18px;
+  border-radius: 22px;
+  font-size: 14px;
+  line-height: 1.65;
+}
+
+.chat-bubble-companion {
+  background: white;
+  color: #1B4332;
+  border-bottom-left-radius: 6px;
+  box-shadow: 0 4px 14px rgba(27,67,50,0.07);
+}
+
+.chat-bubble-user {
+  background: #2D6A4F;
+  color: white;
+  border-bottom-right-radius: 6px;
+  margin-left: auto;
+}
+
+/* ── App Input ──────────────────────────────────────────────────────────── */
+.app-input {
+  background: #F5F4F0;
+  border: 1px solid rgba(45,106,79,0.1);
+  border-radius: 16px;
+  padding: 14px 20px;
+  font-size: 14px;
+  font-family: "Outfit", system-ui, sans-serif;
+  width: 100%;
+  outline: none;
+  color: #1B4332;
+}
+
+.app-input::placeholder {
+  color: #8C9C94;
+}
