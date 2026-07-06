@@ -1,3 +1,13 @@
+<?php
+// Self-loader: when fetched directly via AJAX as a Vercel function, load content
+if (!isset($content)) {
+    $root = dirname(__DIR__);
+    $content_path = $root . '/data/content.json';
+    if (file_exists($content_path)) {
+        $content = json_decode(file_get_contents($content_path), true);
+    }
+}
+?>
 <div class="bg-dark text-white min-h-screen pt-28 pb-20 px-6 font-sans">
     <div class="max-w-6xl mx-auto space-y-16">
         <!-- Back navigation -->
@@ -28,10 +38,14 @@
                 <!-- Main Action Block -->
                 <div class="bg-card border border-gray-800 rounded-2xl p-6 sm:p-8 space-y-6">
                     <div class="flex flex-col sm:flex-row items-center gap-4">
-                        <button onclick="handleDownload()" id="btn-trigger-apk-download" class="w-full sm:w-auto px-8 py-4 bg-gold text-emerald-950 font-bold rounded-full hover:bg-white hover:text-emerald-950 transition-all duration-300 flex items-center justify-center space-x-3 cursor-pointer">
+                        <a id="btn-trigger-apk-download" 
+                           href="https://github.com/marketingwithkimani/sukarireset/releases/latest/download/Sukari_Reset_Companion.apk"
+                           download="Sukari_Reset_Companion.apk"
+                           onclick="handleDownload(event)"
+                           class="w-full sm:w-auto px-8 py-4 bg-gold text-emerald-950 font-bold rounded-full hover:bg-white hover:text-emerald-950 transition-all duration-300 flex items-center justify-center space-x-3 cursor-pointer">
                             <i data-lucide="download" class="w-5 h-5"></i>
                             <span>Download for Android (.APK)</span>
-                        </button>
+                        </a>
                         <button onclick="toggleGuide()" class="w-full sm:w-auto px-6 py-4 bg-emerald-950/40 border border-gold/20 rounded-full hover:border-gold/60 text-white font-medium text-sm transition-all duration-300 text-center cursor-pointer">
                             How to Install Guide
                         </button>
@@ -42,14 +56,15 @@
                             <span class="w-2 h-2 rounded-full bg-gold animate-ping"></span>
                             <span>Downloading Sukari_Reset_Companion.apk...</span>
                         </p>
-                        <p>If your browser prompts you with a safety warning, tap "Download Anyway". Our app is completely safe, verified, and free of trackers.</p>
+                        <p>If your browser prompts you with a safety warning, tap <strong class="text-white">"Download Anyway"</strong>. Our app is completely safe, verified, and free of trackers.</p>
                     </div>
 
                     <div class="flex items-center space-x-3 text-xs text-gray-400 font-mono">
                         <i data-lucide="shield" class="w-4 h-4 text-gold"></i>
-                        <span>v1.0.4 • Optimized for Android 10+ • Secure APK Install</span>
+                        <span>v1.0.4 • Optimized for Android 10+ • Free Direct Install</span>
                     </div>
                 </div>
+
             </div>
 
             <!-- Screenshot/Mockup -->

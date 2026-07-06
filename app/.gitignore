@@ -6,3 +6,6 @@ coverage/
 *.log
 .env*
 !.env.example
+# Android signing key — never commit to repo; stored as GitHub Secret
+release.keystore
+*.jks

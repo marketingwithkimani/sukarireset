@@ -250,47 +250,23 @@ window.toggleFAQ = function(idx) {
 };
 
 // Download Page Logic
-window.handleDownload = function() {
+window.handleDownload = function(e) {
     const status = document.getElementById('download-status');
-    const btn = document.getElementById('btn-trigger-apk-download');
     if (!status) return;
     
-    // Show visual feedback
+    // Show download progress indicator
     status.classList.remove('hidden');
     gsap.from(status, { y: 10, opacity: 0, duration: 0.3 });
     
-    // Check file size first — the placeholder is only 62 bytes
-    fetch('assets/Sukari_Reset_Companion.apk', { method: 'HEAD' })
-        .then(res => {
-            const size = parseInt(res.headers.get('content-length') || '0', 10);
-            if (size < 1024) {
-                // Placeholder detected — show warning inside the status bar
-                const msgEl = status.querySelector('span:last-child');
-                if (msgEl) msgEl.textContent = '⚠️ APK placeholder detected. Replace assets/Sukari_Reset_Companion.apk with your real Android binary to enable downloads.';
-                const pulse = status.querySelector('.animate-ping');
-                if (pulse) { pulse.classList.remove('animate-ping'); pulse.style.background = '#f87171'; }
-                // Still trigger the file so developer can see the flow
-                triggerApkDownload();
-            } else {
-                // Real binary — trigger clean download
-                triggerApkDownload();
-            }
-        })
-        .catch(() => triggerApkDownload()); // Fallback: just download
-
+    // Hide after 10 seconds
     setTimeout(() => {
         gsap.to(status, { opacity: 0, duration: 1, onComplete: () => status.classList.add('hidden') });
-    }, 9000);
+    }, 10000);
+    
+    // The actual download is handled by the <a href> to GitHub Releases
+    // No need to programmatically trigger anything — just let the link work
 };
 
-function triggerApkDownload() {
-    const link = document.createElement('a');
-    link.href = 'assets/Sukari_Reset_Companion.apk';
-    link.download = 'Sukari_Reset_Companion.apk';
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-}
 
 window.toggleGuide = function() {
     const guide = document.getElementById('apk-install-guide');

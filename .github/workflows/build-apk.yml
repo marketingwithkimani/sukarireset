@@ -1,0 +1,115 @@
+name: Build & Release Android APK
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  build-apk:
+    name: Build Signed APK
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. Checkout the repository
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # 2. Set up Node.js for the web build
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+          cache-dependency-path: app/package-lock.json
+
+      # 3. Install npm dependencies and build the web app
+      - name: Install dependencies
+        run: npm ci
+        working-directory: app
+
+      - name: Build web app (Vite)
+        run: npm run build
+        working-directory: app
+
+      # 4. Sync Capacitor (copies web assets into android/ folder)
+      - name: Sync Capacitor Android
+        run: npx cap sync android
+        working-directory: app
+
+      # 5. Set up Java 17 (required for Gradle + Android build)
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+          cache: gradle
+
+      # 6. Grant Gradle execute permission
+      - name: Make gradlew executable
+        run: chmod +x ./gradlew
+        working-directory: app/android
+
+      # 7. Decode keystore from GitHub Secret (base64-encoded)
+      - name: Decode keystore
+        run: |
+          echo "${{ secrets.KEYSTORE_BASE64 }}" | base64 --decode > app/android/app/release.keystore
+
+      # 8. Build a release APK (signed)
+      - name: Build release APK
+        run: ./gradlew assembleRelease
+        working-directory: app/android
+        env:
+          KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
+          KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
+          KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
+
+      # 9. Sign the APK with the keystore
+      - name: Sign APK
+        id: sign
+        uses: r0adkll/sign-android-release@v1
+        with:
+          releaseDirectory: app/android/app/build/outputs/apk/release
+          signingKeyBase64: ${{ secrets.KEYSTORE_BASE64 }}
+          alias: ${{ secrets.KEY_ALIAS }}
+          keyStorePassword: ${{ secrets.KEYSTORE_PASSWORD }}
+          keyPassword: ${{ secrets.KEY_PASSWORD }}
+
+      # 10. Rename APK to friendly name
+      - name: Rename APK
+        run: |
+          mv "${{ steps.sign.outputs.signedReleaseFile }}" app/android/app/build/outputs/apk/release/Sukari_Reset_Companion.apk
+
+      # 11. Upload APK as a build artifact (available in Actions tab)
+      - name: Upload APK artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: Sukari_Reset_Companion
+          path: app/android/app/build/outputs/apk/release/Sukari_Reset_Companion.apk
+          retention-days: 90
+
+      # 12. Create a GitHub Release with the APK attached
+      - name: Get short SHA
+        id: sha
+        run: echo "sha=${GITHUB_SHA::7}" >> $GITHUB_OUTPUT
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: apk-${{ steps.sha.outputs.sha }}
+          name: "Sukari Reset v1.0 — Build ${{ steps.sha.outputs.sha }}"
+          body: |
+            ## Sukari Reset Companion App
+            
+            ### Installation Instructions
+            1. Download `Sukari_Reset_Companion.apk` below
+            2. On your Android phone, go to **Settings → Security → Unknown Sources** and enable it
+            3. Open the downloaded APK file and tap **Install**
+            4. Open **Sukari Reset** from your app drawer
+            
+            > Built automatically from the latest main branch.
+          files: app/android/app/build/outputs/apk/release/Sukari_Reset_Companion.apk
+          draft: false
+          prerelease: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

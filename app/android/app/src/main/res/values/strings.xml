@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Sukari Reset</string>
+    <string name="title_activity_main">Sukari Reset</string>
+    <string name="package_name">co.ke.sukarireset.app</string>
+    <string name="custom_url_scheme">co.ke.sukarireset.app</string>
+</resources>
