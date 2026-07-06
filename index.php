@@ -10,7 +10,13 @@ if (file_exists($content_path)) {
 } else {
     die("Error: content.json not found at " . $content_path);
 }
-$page = isset($_GET['p']) ? $_GET['p'] : 'home';
+
+// Support for clean URLs or specific page redirects
+if (isset($_GET['p']) && $_GET['p'] !== 'home') {
+    $target = $_GET['p'];
+    header("Location: /#$target");
+    exit;
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -31,6 +37,9 @@ $page = isset($_GET['p']) ? $_GET['p'] : 'home';
     
     <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
+
+    <!-- Supabase JS -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
     <style>
         :root {
@@ -108,6 +117,8 @@ $page = isset($_GET['p']) ? $_GET['p'] : 'home';
     </main>
 
     <?php include 'includes/footer.php'; ?>
+
+    <?php include 'includes/chat_widget.php'; ?>
 
     <!-- App Logic -->
     <script src="js/app.js"></script>

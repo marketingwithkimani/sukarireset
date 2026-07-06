@@ -31,7 +31,7 @@
 
         <!-- Action Button -->
         <div class="hidden md:flex items-center">
-            <a href="#membership" class="flex items-center space-x-2 px-5 py-2.5 rounded-full bg-[#cfa85c] text-[#121413] hover:bg-white hover:text-emerald-950 hover:shadow-lg hover:shadow-[#cfa85c]/10 transition-all duration-300 font-sans font-medium text-sm tracking-wide cursor-pointer">
+            <a href="#membership" class="flex items-center space-x-2 px-5 py-2.5 rounded-full bg-[#cfa85c] text-[#0A1710] hover:bg-white hover:text-emerald-950 hover:shadow-lg hover:shadow-[#cfa85c]/10 transition-all duration-300 font-sans font-medium text-sm tracking-wide cursor-pointer">
                 <span>Join the Reset</span>
                 <i data-lucide="arrow-up-right" class="w-4 h-4"></i>
             </a>
@@ -50,7 +50,7 @@
         <a href="#home" class="mobile-nav-link text-left py-2.5 font-sans text-base font-medium tracking-wide border-b border-gray-800/50 text-gray-300" data-page="home">The Story</a>
         <a href="#download" class="mobile-nav-link text-left py-2.5 font-sans text-base font-medium tracking-wide border-b border-gray-800/50 text-gray-300" data-page="download">The Companion App</a>
         <a href="#membership" class="mobile-nav-link text-left py-2.5 font-sans text-base font-medium tracking-wide border-b border-gray-800/50 text-gray-300" data-page="membership">Membership Circle</a>
-        <a href="#membership" class="w-full flex items-center justify-center space-x-2 py-3 rounded-full bg-[#cfa85c] text-[#121413] font-medium text-center tracking-wide">
+        <a href="#membership" class="w-full flex items-center justify-center space-x-2 py-3 rounded-full bg-[#cfa85c] text-[#0A1710] font-medium text-center tracking-wide">
             <span>Join the Reset</span>
             <i data-lucide="arrow-up-right" class="w-4 h-4"></i>
         </a>

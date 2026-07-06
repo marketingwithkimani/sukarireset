@@ -1,8 +1,18 @@
 // Sukari Reset - App Logic
 let appData = {};
+let supabaseClient = null;
 
 // Use relative paths to avoid issues with subdirectories
 const BASE_PATH = '';
+
+// Supabase Configuration
+const SUPABASE_URL = 'https://scuomepbvnsrpffhlfwd.supabase.co';
+const SUPABASE_ANON_KEY = 'sb_publishable_gjfoxu3ZHP8v-Vf3FElHmA_F1yFGQcc';
+
+// Initialize Supabase
+if (typeof supabase !== 'undefined') {
+    supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+}
 
 // Initialize App
 document.addEventListener('DOMContentLoaded', async () => {
