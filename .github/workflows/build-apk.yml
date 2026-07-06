@@ -19,13 +19,14 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: '24'
           cache: 'npm'
           cache-dependency-path: app/package-lock.json
 
       - name: Install dependencies
-        run: npm ci
+        run: npm install
         working-directory: app
+
 
       - name: Build web app (Vite)
         run: npm run build
@@ -72,6 +73,9 @@ jobs:
           KEYSTORE_PASSWORD: ${{ env.KEYSTORE_PASSWORD || secrets.KEYSTORE_PASSWORD }}
           KEY_ALIAS: ${{ env.KEY_ALIAS || secrets.KEY_ALIAS }}
           KEY_PASSWORD: ${{ env.KEY_PASSWORD || secrets.KEY_PASSWORD }}
+
+      - name: List Generated APKs (Debug)
+        run: find app/android/app/build/outputs/apk -name "*.apk"
 
       - name: Prepare APK for Release
         run: |
