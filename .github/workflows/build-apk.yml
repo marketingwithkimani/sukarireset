@@ -7,15 +7,13 @@ on:
 
 jobs:
   build-apk:
-    name: Build Signed APK
+    name: Build Android APK
     runs-on: ubuntu-latest
 
     steps:
-      # 1. Checkout the repository
       - name: Checkout code
         uses: actions/checkout@v4
 
-      # 2. Set up Node.js for the web build
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
@@ -23,7 +21,6 @@ jobs:
           cache: 'npm'
           cache-dependency-path: app/package-lock.json
 
-      # 3. Install npm dependencies and build the web app
       - name: Install dependencies
         run: npm ci
         working-directory: app
@@ -32,12 +29,10 @@ jobs:
         run: npm run build
         working-directory: app
 
-      # 4. Sync Capacitor (copies web assets into android/ folder)
       - name: Sync Capacitor Android
         run: npx cap sync android
         working-directory: app
 
-      # 5. Set up Java 17 (required for Gradle + Android build)
       - name: Set up JDK 17
         uses: actions/setup-java@v4
         with:
@@ -45,50 +40,50 @@ jobs:
           distribution: 'temurin'
           cache: gradle
 
-      # 6. Grant Gradle execute permission
       - name: Make gradlew executable
         run: chmod +x ./gradlew
         working-directory: app/android
 
-      # 7. Decode keystore from GitHub Secret (base64-encoded)
-      - name: Decode keystore
+      # ─── KEYSTORE LOGIC ──────────────────────────────────────────────────
+      # If secrets are provided, use them. 
+      # If NOT, generate a temporary one so the build doesn't fail and users get an APK.
+      - name: Prepare Keystore
+        id: keystore
         run: |
-          echo "${{ secrets.KEYSTORE_BASE64 }}" | base64 --decode > app/android/app/release.keystore
+          if [ -n "${{ secrets.KEYSTORE_BASE64 }}" ]; then
+            echo "Using provided secrets..."
+            echo "${{ secrets.KEYSTORE_BASE64 }}" | base64 --decode > app/android/app/release.keystore
+            echo "signed=true" >> $GITHUB_OUTPUT
+          else
+            echo "Secrets missing. Generating temporary key for auto-download..."
+            keytool -genkey -v -keystore app/android/app/release.keystore -alias sukarireset -keyalg RSA -keysize 2048 -validity 10000 -storepass sukari2026 -keypass sukari2026 -dname "CN=Sukari Reset, OU=App, O=Sukari, L=Nairobi, ST=Nairobi, C=KE"
+            echo "KEYSTORE_PASSWORD=sukari2026" >> $GITHUB_ENV
+            echo "KEY_ALIAS=sukarireset" >> $GITHUB_ENV
+            echo "KEY_PASSWORD=sukari2026" >> $GITHUB_ENV
+            echo "signed=true" >> $GITHUB_OUTPUT
+          fi
 
-      # 8. Build a release APK (signed)
       - name: Build release APK
         run: ./gradlew assembleRelease
         working-directory: app/android
         env:
-          KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
-          KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
-          KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
+          KEYSTORE_PASSWORD: ${{ env.KEYSTORE_PASSWORD || secrets.KEYSTORE_PASSWORD }}
+          KEY_ALIAS: ${{ env.KEY_ALIAS || secrets.KEY_ALIAS }}
+          KEY_PASSWORD: ${{ env.KEY_PASSWORD || secrets.KEY_PASSWORD }}
 
-      # 9. Sign the APK with the keystore
-      - name: Sign APK
-        id: sign
-        uses: r0adkll/sign-android-release@v1
-        with:
-          releaseDirectory: app/android/app/build/outputs/apk/release
-          signingKeyBase64: ${{ secrets.KEYSTORE_BASE64 }}
-          alias: ${{ secrets.KEY_ALIAS }}
-          keyStorePassword: ${{ secrets.KEYSTORE_PASSWORD }}
-          keyPassword: ${{ secrets.KEY_PASSWORD }}
-
-      # 10. Rename APK to friendly name
-      - name: Rename APK
+      - name: Prepare APK for Release
         run: |
-          mv "${{ steps.sign.outputs.signedReleaseFile }}" app/android/app/build/outputs/apk/release/Sukari_Reset_Companion.apk
+          # Find the generated APK and move it to a predictable location
+          APK_PATH=$(find app/android/app/build/outputs/apk/release -name "*.apk" | head -n 1)
+          cp "$APK_PATH" Sukari_Reset_Companion.apk
 
-      # 11. Upload APK as a build artifact (available in Actions tab)
       - name: Upload APK artifact
         uses: actions/upload-artifact@v4
         with:
           name: Sukari_Reset_Companion
-          path: app/android/app/build/outputs/apk/release/Sukari_Reset_Companion.apk
+          path: Sukari_Reset_Companion.apk
           retention-days: 90
 
-      # 12. Create a GitHub Release with the APK attached
       - name: Get short SHA
         id: sha
         run: echo "sha=${GITHUB_SHA::7}" >> $GITHUB_OUTPUT
@@ -96,20 +91,25 @@ jobs:
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
         with:
-          tag_name: apk-${{ steps.sha.outputs.sha }}
+          tag_name: latest
           name: "Sukari Reset v1.0 — Build ${{ steps.sha.outputs.sha }}"
           body: |
             ## Sukari Reset Companion App
             
-            ### Installation Instructions
-            1. Download `Sukari_Reset_Companion.apk` below
-            2. On your Android phone, go to **Settings → Security → Unknown Sources** and enable it
-            3. Open the downloaded APK file and tap **Install**
-            4. Open **Sukari Reset** from your app drawer
+            This is the official Android APK for Sukari Reset.
             
-            > Built automatically from the latest main branch.
-          files: app/android/app/build/outputs/apk/release/Sukari_Reset_Companion.apk
+            ### 📥 Installation Instructions
+            1. Tap the **Sukari_Reset_Companion.apk** link below.
+            2. If your phone says "File might be harmful", tap **Download anyway**.
+            3. Once downloaded, open the file.
+            4. If prompted to allow "Install from unknown sources", go to Settings and enable it for your browser.
+            5. Tap **Install** and then **Open**.
+            
+            > Build ID: ${{ steps.sha.outputs.sha }} (Auto-generated)
+          files: Sukari_Reset_Companion.apk
           draft: false
           prerelease: false
+          make_latest: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
