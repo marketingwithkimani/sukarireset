@@ -60,7 +60,7 @@ async function handleRouting() {
     gsap.to(container, { opacity: 0, y: -10, duration: 0.2, onComplete: async () => {
         try {
             // Fetch and Load Page Content
-            const url = `${BASE_PATH}views/${page}.php?v=${Date.now()}`;
+            const url = `index.php?p=${page}&ajax=1&v=${Date.now()}`;
             const pageResp = await fetch(url);
             if (!pageResp.ok) throw new Error(`Page ${page} not found at ${url}`);
             const html = await pageResp.text();

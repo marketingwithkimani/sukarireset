@@ -17,6 +17,18 @@ if (file_exists($content_path)) {
     die("Error: content.json not found at " . $content_path);
 }
 
+// Support for AJAX requests (only return the inner content)
+if (isset($_GET['ajax'])) {
+    $page = isset($_GET['p']) ? $_GET['p'] : 'home';
+    $view_file = $project_root . "/views/$page.php";
+    if (file_exists($view_file)) {
+        include $view_file;
+    } else {
+        echo "View not found: $page";
+    }
+    exit;
+}
+
 // Support for clean URLs or specific page redirects
 if (isset($_GET['p']) && $_GET['p'] !== 'home') {
     $target = $_GET['p'];
