@@ -1,3 +1,13 @@
+<?php
+// Self-loader: when fetched directly via AJAX as a Vercel function, load content
+if (!isset($content)) {
+    $root = dirname(__DIR__);
+    $content_path = $root . '/data/content.json';
+    if (file_exists($content_path)) {
+        $content = json_decode(file_get_contents($content_path), true);
+    }
+}
+?>
 <div class="bg-dark text-white min-h-screen pt-28 pb-20 px-6 font-sans">
     <div class="max-w-6xl mx-auto space-y-16">
         <!-- Back navigation -->

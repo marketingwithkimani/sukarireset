@@ -4,7 +4,13 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
-$content_path = __DIR__ . '/data/content.json';
+// Resolve the project root regardless of which directory this file is called from
+$project_root = __DIR__;
+// Support for being called from api/ subdirectory
+if (basename(__DIR__) === 'api') {
+    $project_root = dirname(__DIR__);
+}
+$content_path = $project_root . '/data/content.json';
 if (file_exists($content_path)) {
     $content = json_decode(file_get_contents($content_path), true);
 } else {
@@ -107,18 +113,18 @@ if (isset($_GET['p']) && $_GET['p'] !== 'home') {
 </head>
 <body class="selection-gold flex flex-col justify-between min-h-screen">
 
-    <?php include 'includes/navbar.php'; ?>
+    <?php include $project_root . '/includes/navbar.php'; ?>
 
     <main id="content-area" class="flex-grow pt-20">
         <!-- Content will be swapped via AJAX/Hash routing -->
         <div id="page-container">
-            <?php include 'views/home.php'; ?>
+            <?php include $project_root . '/views/home.php'; ?>
         </div>
     </main>
 
-    <?php include 'includes/footer.php'; ?>
+    <?php include $project_root . '/includes/footer.php'; ?>
 
-    <?php include 'includes/chat_widget.php'; ?>
+    <?php include $project_root . '/includes/chat_widget.php'; ?>
 
     <!-- App Logic -->
     <script src="js/app.js"></script>
