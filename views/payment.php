@@ -1,3 +1,13 @@
+<?php
+// Self-loader: when fetched directly via AJAX as a Vercel function, load content
+if (!isset($content)) {
+    $root = dirname(__DIR__);
+    $content_path = $root . '/data/content.json';
+    if (file_exists($content_path)) {
+        $content = json_decode(file_get_contents($content_path), true);
+    }
+}
+?>
 <div class="bg-dark text-white min-h-screen pt-28 pb-20 px-6 font-sans">
     <div id="payment-main" class="max-w-5xl mx-auto space-y-12">
         <!-- Back navigation -->
@@ -17,7 +27,7 @@
                 </div>
 
                 <!-- Form Type Toggle -->
-                <div id="payment-methods" class="hidden grid grid-cols-2 gap-4 p-1 bg-dark rounded-xl border border-gray-800">
+                <div id="payment-methods" class="grid grid-cols-2 gap-4 p-1 bg-dark rounded-xl border border-gray-800" style="display:none">
                     <button onclick="switchPaymentMethod('mpesa')" id="pay-mpesa" class="flex items-center justify-center space-x-2 py-3 rounded-lg text-xs font-semibold tracking-wider font-mono transition-all cursor-pointer bg-emerald-950 text-gold border border-emerald-500/20 shadow">
                         <i data-lucide="smartphone" class="w-4 h-4"></i>
                         <span>M-PESA / SAFARICOM</span>

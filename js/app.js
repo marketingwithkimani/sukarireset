@@ -252,24 +252,45 @@ window.toggleFAQ = function(idx) {
 // Download Page Logic
 window.handleDownload = function() {
     const status = document.getElementById('download-status');
+    const btn = document.getElementById('btn-trigger-apk-download');
     if (!status) return;
     
-    // Trigger visual feedback
+    // Show visual feedback
     status.classList.remove('hidden');
     gsap.from(status, { y: 10, opacity: 0, duration: 0.3 });
     
-    // Trigger actual download (linking to assets/Sukari_Reset_Companion.apk)
+    // Check file size first — the placeholder is only 62 bytes
+    fetch('assets/Sukari_Reset_Companion.apk', { method: 'HEAD' })
+        .then(res => {
+            const size = parseInt(res.headers.get('content-length') || '0', 10);
+            if (size < 1024) {
+                // Placeholder detected — show warning inside the status bar
+                const msgEl = status.querySelector('span:last-child');
+                if (msgEl) msgEl.textContent = '⚠️ APK placeholder detected. Replace assets/Sukari_Reset_Companion.apk with your real Android binary to enable downloads.';
+                const pulse = status.querySelector('.animate-ping');
+                if (pulse) { pulse.classList.remove('animate-ping'); pulse.style.background = '#f87171'; }
+                // Still trigger the file so developer can see the flow
+                triggerApkDownload();
+            } else {
+                // Real binary — trigger clean download
+                triggerApkDownload();
+            }
+        })
+        .catch(() => triggerApkDownload()); // Fallback: just download
+
+    setTimeout(() => {
+        gsap.to(status, { opacity: 0, duration: 1, onComplete: () => status.classList.add('hidden') });
+    }, 9000);
+};
+
+function triggerApkDownload() {
     const link = document.createElement('a');
     link.href = 'assets/Sukari_Reset_Companion.apk';
     link.download = 'Sukari_Reset_Companion.apk';
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
-
-    setTimeout(() => {
-        gsap.to(status, { opacity: 0, duration: 1, onComplete: () => status.classList.add('hidden') });
-    }, 8000);
-};
+}
 
 window.toggleGuide = function() {
     const guide = document.getElementById('apk-install-guide');
@@ -292,8 +313,9 @@ function initPayment(tierId) {
     selectedTier = appData.pricing_tiers.find(t => t.id === tierId) || appData.pricing_tiers[1];
     
     const methods = document.getElementById('payment-methods');
-    if (methods && selectedTier.id !== 'free') {
-        methods.classList.remove('hidden');
+    if (methods) {
+        // Use style.display because the element uses inline style (avoids Tailwind hidden+grid conflict)
+        methods.style.display = (selectedTier.id !== 'free') ? 'grid' : 'none';
     }
     
     renderPaymentForm();

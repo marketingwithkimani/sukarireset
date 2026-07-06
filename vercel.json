@@ -1,15 +1,15 @@
 {
   "functions": {
     "api/*.php": { "runtime": "vercel-php@0.9.0" },
-    "views/*.php": { "runtime": "vercel-php@0.9.0" },
     "index.php": { "runtime": "vercel-php@0.9.0" }
   },
   "routes": [
     {
-      "src": "/assets/Sukari_Reset_Companion.apk",
+      "src": "/assets/Sukari_Reset_Companion\\.apk",
       "headers": {
         "Content-Type": "application/vnd.android.package-archive",
-        "Content-Disposition": "attachment; filename=\"Sukari_Reset_Companion.apk\""
+        "Content-Disposition": "attachment; filename=\"Sukari_Reset_Companion.apk\"",
+        "Cache-Control": "no-cache"
       },
       "dest": "/assets/Sukari_Reset_Companion.apk"
     },
@@ -18,12 +18,8 @@
       "dest": "/$1/$2"
     },
     {
-      "src": "/api/(.*)",
-      "dest": "/api/$1"
-    },
-    {
-      "src": "/views/(.*)",
-      "dest": "/views/$1"
+      "src": "/api/(.*)\\.php",
+      "dest": "/api/$1.php"
     },
     {
       "src": "/(.*)",
@@ -31,3 +27,4 @@
     }
   ]
 }
+
